@@ -31,7 +31,7 @@
 
 /* Card Styles */
 .card {
-  @apply bg-white p-10 rounded-xl shadow-soft transition-all duration-200 
+  @apply bg-white p-6 rounded-xl shadow-soft transition-all duration-200 
          hover:shadow-lg hover:scale-[1.01];
 }
 
@@ -71,4 +71,53 @@ body {
 
 .page-container {
   @apply mx-auto px-4 max-w-6xl;
+}
+
+/* Dark Mode Transitions */
+* {
+  @apply transition-colors duration-200;
+}
+
+/* Dark mode form styles */
+.dark .input-field {
+  @apply bg-dark-200 border-dark-300 text-gray-100;
+}
+
+.dark .card {
+  @apply bg-dark-100 shadow-dark border border-dark-300;
+}
+
+.dark .btn-secondary {
+  @apply bg-dark-300 text-primary-400 hover:bg-dark-200;
+}
+
+/* Add shadow for dark mode */
+.shadow-dark {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3),
+              0 2px 4px -1px rgba(0, 0, 0, 0.24);
+}
+
+/* AI Chat Styles */
+.ai-chat-container {
+  @apply relative rounded-xl overflow-hidden;
+  min-height: 600px;
+}
+
+.dark .ai-chat-container {
+  @apply bg-dark-200;
+}
+
+/* Override ElevenLabs widget styles for dark mode */
+.dark elevenlabs-convai {
+  --el-color-primary: theme('colors.primary.400');
+  --el-background-color: theme('colors.dark.200');
+  --el-text-color: theme('colors.gray.100');
+  --el-border-color: theme('colors.dark.300');
+}
+
+elevenlabs-convai {
+  --el-color-primary: theme('colors.primary.600');
+  --el-background-color: theme('colors.light.200');
+  --el-text-color: theme('colors.gray.800');
+  --el-border-color: theme('colors.light.400');
 }

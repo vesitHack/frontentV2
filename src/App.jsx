@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 import { Toaster } from 'react-hot-toast'
 import {
@@ -6,30 +6,61 @@ import {
   UserIcon,
   ChatBubbleLeftRightIcon,
   DocumentTextIcon,
-  SparklesIcon
+  SparklesIcon,
+  MoonIcon,
+  SunIcon,
+  ChatBubbleOvalLeftEllipsisIcon,
+  BeakerIcon
 } from '@heroicons/react/24/outline'
 
 // Components
 import StoryIdeas from './components/StoryIdeas'
+import StoryGenerator from './components/StoryGenerator'
 import PlotDevelopment from './components/PlotDevelopment'
 import CharacterCreation from './components/CharacterCreation'
 import DialogueGeneration from './components/DialogueGeneration'
 import TextAnalysis from './components/TextAnalysis'
+import AIChat from './components/AIChat'
+import CharacterDevelopment from './components/CharacterDevelopment'
 
 function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true)
+  const [isDarkMode, setIsDarkMode] = useState(false)
+
+  // Initialize theme from localStorage
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('theme')
+    if (savedTheme === 'dark') {
+      setIsDarkMode(true)
+      document.documentElement.classList.add('dark')
+    }
+  }, [])
+
+  const toggleTheme = () => {
+    setIsDarkMode(!isDarkMode)
+    if (!isDarkMode) {
+      document.documentElement.classList.add('dark')
+      localStorage.setItem('theme', 'dark')
+    } else {
+      document.documentElement.classList.remove('dark')
+      localStorage.setItem('theme', 'light')
+    }
+  }
 
   const navigation = [
     { name: 'Story Ideas', icon: SparklesIcon, component: StoryIdeas, path: '/' },
+    { name: 'Story Generator', icon: BeakerIcon, component: StoryGenerator, path: '/generator' },
+    { name: 'Character Development', icon: UserIcon, component: CharacterDevelopment, path: '/characters' },
     { name: 'Plot Development', icon: BookOpenIcon, component: PlotDevelopment, path: '/plot' },
     { name: 'Character Creation', icon: UserIcon, component: CharacterCreation, path: '/character' },
     { name: 'Dialogue Generation', icon: ChatBubbleLeftRightIcon, component: DialogueGeneration, path: '/dialogue' },
+    { name: 'Dialogue Practice', icon: ChatBubbleOvalLeftEllipsisIcon, component: AIChat, path: '/practice' },
     { name: 'Text Analysis', icon: DocumentTextIcon, component: TextAnalysis, path: '/analysis' },
   ]
 
   return (
     <Router>
-      <div className="min-h-screen bg-light-100 antialiased font-sans">
+      <div className={`min-h-screen antialiased font-sans ${isDarkMode ? 'dark bg-dark-500' : 'bg-light-100'}`}>
         <Toaster 
           position="top-right" 
           toastOptions={{
@@ -45,23 +76,57 @@ function App() {
         />
         
         {/* Sidebar */}
-        <div className={`fixed inset-y-0 left-0 z-50 w-64 bg-white border-r border-light-400 transform transition-transform duration-300 ease-in-out ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+        <div className={`fixed inset-y-0 left-0 z-50 w-64 transform transition-transform duration-300 ease-in-out ${
+          isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} ${
+          isDarkMode ? 'bg-dark-100 border-dark-300' : 'bg-white border-light-400'}`}>
           <div className="flex flex-col h-full">
-            <div className="flex items-center justify-center h-20 px-4 bg-light-200 border-b border-light-400">
-              <h1 className="text-xl font-bold text-gray-800 whitespace-nowrap">Storytelling<br/>Companion</h1>
+            <div className={`flex items-center justify-center h-20 px-4 ${
+              isDarkMode ? 'bg-dark-200 border-dark-300' : 'bg-light-200 border-light-400'} border-b`}>
+              <h1 className={`text-xl font-bold whitespace-nowrap ${
+                isDarkMode ? 'text-gray-100' : 'text-gray-800'}`}>
+                Storytelling<br/>Companion
+              </h1>
             </div>
             <nav className="flex-1 px-4 py-4 space-y-2 overflow-y-auto scrollbar-thin scrollbar-thumb-light-400 scrollbar-track-light-200">
               {navigation.map((item) => (
                 <Link
                   key={item.name}
                   to={item.path}
-                  className="flex items-center px-4 py-3 text-gray-600 rounded-lg hover:bg-primary-50 hover:text-primary-600 transition-all duration-200 ease-in-out group"
+                  className={`flex items-center px-4 py-3 rounded-lg transition-all duration-200 ease-in-out group ${
+                    isDarkMode 
+                      ? 'text-gray-300 hover:bg-dark-300 hover:text-primary-400' 
+                      : 'text-gray-600 hover:bg-primary-50 hover:text-primary-600'
+                  }`}
                 >
                   <item.icon className="w-6 h-6 mr-3 transition-colors duration-200" />
                   <span className="font-medium">{item.name}</span>
                 </Link>
               ))}
             </nav>
+
+            {/* Theme Toggle Button */}
+            <div className={`p-4 border-t ${isDarkMode ? 'border-dark-300' : 'border-light-400'}`}>
+              <button
+                onClick={toggleTheme}
+                className={`flex items-center justify-center w-full px-4 py-2 rounded-lg transition-all duration-200 ${
+                  isDarkMode
+                    ? 'bg-dark-300 text-gray-300 hover:bg-dark-200'
+                    : 'bg-light-200 text-gray-600 hover:bg-light-300'
+                }`}
+              >
+                {isDarkMode ? (
+                  <>
+                    <SunIcon className="w-5 h-5 mr-2" />
+                    Light Mode
+                  </>
+                ) : (
+                  <>
+                    <MoonIcon className="w-5 h-5 mr-2" />
+                    Dark Mode
+                  </>
+                )}
+              </button>
+            </div>
           </div>
         </div>
 
