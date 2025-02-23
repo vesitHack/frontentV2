@@ -219,7 +219,7 @@ const StoryGenerator = () => {
                 <div className="mt-8 card p-6">
                     <h3 className="text-xl font-semibold mb-6 dark:text-gray-100 text-gray-900">Generated Story Concept</h3>
 
-                    <div className="space-y-6">
+                    <div className="space-y-6 text-black">
                         <div className="card p-4">
                             <h4 className="font-medium mb-2 dark:text-gray-200">Story Idea</h4>
                             <p className="dark:text-gray-300">{response.storyIdea}</p>
