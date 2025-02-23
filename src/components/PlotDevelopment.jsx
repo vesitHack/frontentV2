@@ -27,46 +27,47 @@ export default function PlotDevelopment() {
   };
 
   return (
-    <div className="max-w-5xl mx-auto px-4">
+    <div className="max-w-4xl mx-auto px-4">
       <div className="mb-8 text-center">
-        <h2 className="text-3xl font-bold text-gray-800 mb-2">Plot Development</h2>
-        <p className="text-gray-600">Structure your story with a detailed plot outline</p>
+        <h2 className="text-3xl font-bold mb-2 dark:text-gray-100">Plot Development</h2>
+        <p className="dark:text-gray-300 ">Structure your story with a detailed plot outline</p>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-6 bg-white p-6 rounded-xl shadow-soft mx-auto">
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+      <form onSubmit={handleSubmit} className="card p-6 space-y-6">
+        <div className="input-container">
+          <label className="form-label">
             Story Premise
             <span className="text-red-500">*</span>
           </label>
           <textarea
             required
-            className="w-full px-6 py-3 bg-light-200 text-gray-800 rounded-lg border border-light-400 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 focus:outline-none transition-colors duration-200 min-h-[120px]"
+            className="input-field"
             placeholder="Enter your story's main premise..."
+            rows="4"
             value={formData.story_premise}
             onChange={(e) => setFormData({ ...formData, story_premise: e.target.value })}
           />
         </div>
 
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+        <div className="input-container">
+          <label className="form-label">
             Current Point in Story
           </label>
           <input
             type="text"
-            className="w-full px-6 py-3 bg-light-200 text-gray-800 rounded-lg border border-light-400 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 focus:outline-none transition-colors duration-200"
+            className="input-field"
             placeholder="Where is your story currently? (e.g., beginning, middle, climax)"
             value={formData.current_point}
             onChange={(e) => setFormData({ ...formData, current_point: e.target.value })}
           />
         </div>
 
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+        <div className="input-container">
+          <label className="form-label">
             Desired Outcome
           </label>
           <textarea
-            className="w-full px-6 py-3 bg-light-200 text-gray-800 rounded-lg border border-light-400 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 focus:outline-none transition-colors duration-200"
+            className="input-field"
             rows="3"
             placeholder="What's your intended ending or resolution?"
             value={formData.desired_outcome}
@@ -74,24 +75,22 @@ export default function PlotDevelopment() {
           />
         </div>
 
-        <button
-          type="submit"
-          disabled={loading}
-          className={`w-full py-3 px-4 rounded-lg text-white font-medium ${
-            loading
-              ? 'bg-gray-400 cursor-not-allowed'
-              : 'bg-primary-600 hover:bg-primary-700'
-          } transition-colors duration-200 shadow-sm`}
-        >
-          {loading ? 'Generating Plot...' : 'Generate Plot Outline'}
-        </button>
+        <div className="input-container">
+          <button
+            type="submit"
+            disabled={loading}
+            className={`button w-full ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+          >
+            {loading ? 'Generating Plot...' : 'Generate Plot Outline'}
+          </button>
+        </div>
       </form>
 
       {plotOutline && (
-        <div className="mt-8 bg-white p-6 rounded-xl shadow-soft">
-          <h3 className="text-xl font-semibold text-gray-800 mb-4">Plot Outline</h3>
-          <div className="prose max-w-none">
-            <div className="text-gray-600 whitespace-pre-line">{plotOutline}</div>
+        <div className="mt-8 card p-6">
+          <h3 className="text-xl font-semibold mb-4 dark:text-gray-100 text-gray-900">Plot Outline</h3>
+          <div className="prose max-w-none dark:prose-invert">
+            <div className="dark:text-gray-300 text-gray-600 whitespace-pre-line">{plotOutline}</div>
           </div>
         </div>
       )}
