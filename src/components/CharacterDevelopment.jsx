@@ -115,11 +115,11 @@ const CharacterDevelopment = () => {
 
     // Add a section to display saved characters
     const SavedCharactersList = () => (
-        <div className="mt-8 bg-white p-6 rounded-xl shadow-md">
-            <h3 className="text-2xl text-gray-800 font-semibold mb-4">Saved Characters</h3>
+        <div className="mt-8 card p-6">
+            <h3 className="text-xl font-semibold mb-4 dark:text-gray-100">Saved Characters</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {savedCharacters.map((char) => (
-                    <div key={char.id} className="bg-gray-50 p-4 rounded-lg">
+                    <div key={char.id} className="card p-4">
                         {char.image && (
                             <img 
                                 src={char.image} 
@@ -127,14 +127,14 @@ const CharacterDevelopment = () => {
                                 className="w-full h-48 object-cover rounded-lg mb-3"
                             />
                         )}
-                        <h4 className="text-lg font-medium text-gray-800">{char.name}</h4>
-                        <p className="text-sm text-gray-600">{char.role}</p>
-                        <p className="text-xs text-gray-500 mt-2">
+                        <h4 className="text-lg font-medium dark:text-gray-200">{char.name}</h4>
+                        <p className="text-sm dark:text-gray-300">{char.role}</p>
+                        <p className="text-xs dark:text-gray-400 mt-2">
                             {new Date(char.timestamp).toLocaleDateString()}
                         </p>
                         <button 
                             onClick={() => setCharacterDetails(char)}
-                            className="mt-2 text-blue-600 hover:text-blue-800 text-sm"
+                            className="mt-2 button-secondary text-sm"
                         >
                             Edit
                         </button>
@@ -145,115 +145,141 @@ const CharacterDevelopment = () => {
     );
 
     return (
-        <div className="bg-white p-8 rounded-2xl mt-8 shadow-md">
-            <h2 className="text-3xl text-[#1a1a1a] mb-8 text-center font-bold">
-                Create New Character
-            </h2>
-            <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-[1200px] mx-auto">
-                <div className="flex flex-col gap-2">
-                    <label className="font-semibold text-[#2c3e50] text-sm">Name</label>
-                    <input
-                        type="text"
-                        name="name"
-                        value={characterDetails.name}
-                        onChange={handleChange}
-                        placeholder="Character Name"
-                        required
-                        className="p-3 border-2 border-gray-200 rounded-lg text-sm text-gray-800 transition-all focus:outline-none focus:border-[#4a90e2] focus:ring-2 focus:ring-[#4a90e2] focus:ring-opacity-10"
-                    />
+        <div className="max-w-6xl mx-auto px-4">
+            <div className="mb-16">
+                <h2 className="text-4xl font-bold mb-4 dark:text-gray-100 text-center">Character Development</h2>
+                <p className="dark:text-gray-300 text-lg text-center max-w-2xl mx-auto">
+                    Create and customize detailed character profiles with images and save them for future reference
+                </p>
+            </div>
+
+            <form onSubmit={handleSubmit} className="card">
+                <div className="p-8">
+                    <div className="grid grid-cols-2 gap-4">
+                        <div>
+                            <h3 className="text-lg font-semibold mb-4 text-black dark:text-gray-200">Basic Information</h3>
+                            <div className="space-y-6">
+                                <div className="input-group">
+                                    <label className="form-label">Name</label>
+                                    <input
+                                        type="text"
+                                        name="name"
+                                        value={characterDetails.name}
+                                        onChange={handleChange}
+                                        placeholder="Character Name"
+                                        required
+                                        className="input-field"
+                                    />
+                                </div>
+
+                                <div className="input-group">
+                                    <label className="form-label">Role</label>
+                                    <input
+                                        type="text"
+                                        name="role"
+                                        value={characterDetails.role}
+                                        onChange={handleChange}
+                                        placeholder="Character Role"
+                                        className="input-field"
+                                    />
+                                </div>
+
+                                <div className="input-group">
+                                    <label className="form-label">Age</label>
+                                    <input
+                                        type="text"
+                                        name="age"
+                                        value={characterDetails.age}
+                                        onChange={handleChange}
+                                        placeholder="Character Age"
+                                        className="input-field"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h3 className="text-lg font-semibold mb-4 text-black dark:text-gray-200">Character Essence</h3>
+                            <div className="space-y-6">
+                                <div className="textarea-container">
+                                    <label className="form-label">Description</label>
+                                    <textarea
+                                        name="description"
+                                        value={characterDetails.description}
+                                        onChange={handleChange}
+                                        placeholder="General character description"
+                                        className="input-field"
+                                    />
+                                </div>
+
+                                <div className="textarea-container">
+                                    <label className="form-label">Personality</label>
+                                    <textarea
+                                        name="personality"
+                                        value={characterDetails.personality}
+                                        onChange={handleChange}
+                                        placeholder="Character's personality traits"
+                                        className="input-field"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="col-span-2">
+                            <h3 className="text-lg font-semibold mb-4 text-black dark:text-gray-200">Character Development</h3>
+                            <div className="grid grid-cols-2 gap-8">
+                                <div className="textarea-container">
+                                    <label className="form-label">Background</label>
+                                    <textarea
+                                        name="background"
+                                        value={characterDetails.background}
+                                        onChange={handleChange}
+                                        placeholder="Character's background story"
+                                        className="input-field"
+                                    />
+                                </div>
+
+                                <div className="textarea-container">
+                                    <label className="form-label">Goals & Motivations</label>
+                                    <textarea
+                                        name="goals"
+                                        value={characterDetails.goals}
+                                        onChange={handleChange}
+                                        placeholder="Character's goals and motivations"
+                                        className="input-field"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="col-span-2 mt-8">
+                            <h3 className="text-lg font-semibold mb-4 text-black dark:text-gray-200">Physical Details</h3>
+                            <div className="input-container w-full">
+                                <textarea
+                                    name="appearance"
+                                    value={characterDetails.appearance}
+                                    onChange={handleChange}
+                                    placeholder="Detailed physical appearance"
+                                    rows="4"
+                                    className="input-field"
+                                />
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <div className="flex flex-col gap-2">
-                    <label className="font-semibold text-[#2c3e50] text-sm">Role</label>
-                    <input
-                        type="text"
-                        name="role"
-                        value={characterDetails.role}
-                        onChange={handleChange}
-                        placeholder="Character Role"
-                        className="p-3 border-2 border-gray-200 rounded-lg text-sm text-gray-800 transition-all focus:outline-none focus:border-[#4a90e2] focus:ring-2 focus:ring-[#4a90e2] focus:ring-opacity-10"
-                    />
-                </div>
-
-                <div className="flex flex-col gap-2">
-                    <label className="font-semibold text-[#2c3e50] text-sm">Age</label>
-                    <input
-                        type="text"
-                        name="age"
-                        value={characterDetails.age}
-                        onChange={handleChange}
-                        placeholder="Character Age"
-                        className="p-3 border-2 border-gray-200 rounded-lg text-sm text-gray-800 transition-all focus:outline-none focus:border-[#4a90e2] focus:ring-2 focus:ring-[#4a90e2] focus:ring-opacity-10"
-                    />
-                </div>
-
-                <div className="flex flex-col gap-2">
-                    <label className="font-semibold text-[#2c3e50] text-sm">Description</label>
-                    <textarea
-                        name="description"
-                        value={characterDetails.description}
-                        onChange={handleChange}
-                        placeholder="General character description"
-                        className="p-3 border-2 border-gray-200 rounded-lg text-sm text-gray-800 min-h-[100px] resize-y transition-all focus:outline-none focus:border-[#4a90e2] focus:ring-2 focus:ring-[#4a90e2] focus:ring-opacity-10"
-                    />
-                </div>
-
-                <div className="flex flex-col gap-2">
-                    <label className="font-semibold text-[#2c3e50] text-sm">Personality</label>
-                    <textarea
-                        name="personality"
-                        value={characterDetails.personality}
-                        onChange={handleChange}
-                        placeholder="Character's personality traits"
-                        className="p-3 border-2 border-gray-200 rounded-lg text-sm text-gray-800 min-h-[100px] resize-y transition-all focus:outline-none focus:border-[#4a90e2] focus:ring-2 focus:ring-[#4a90e2] focus:ring-opacity-10"
-                    />
-                </div>
-
-                <div className="flex flex-col gap-2">
-                    <label className="font-semibold text-[#2c3e50] text-sm">Background</label>
-                    <textarea
-                        name="background"
-                        value={characterDetails.background}
-                        onChange={handleChange}
-                        placeholder="Character's background story"
-                        className="p-3 border-2 border-gray-200 rounded-lg text-sm text-gray-800 min-h-[100px] resize-y transition-all focus:outline-none focus:border-[#4a90e2] focus:ring-2 focus:ring-[#4a90e2] focus:ring-opacity-10"
-                    />
-                </div>
-
-                <div className="flex flex-col gap-2">
-                    <label className="font-semibold text-[#2c3e50] text-sm">Goals</label>
-                    <textarea
-                        name="goals"
-                        value={characterDetails.goals}
-                        onChange={handleChange}
-                        placeholder="Character's goals and motivations"
-                        className="p-3 border-2 border-gray-200 rounded-lg text-sm text-gray-800 min-h-[100px] resize-y transition-all focus:outline-none focus:border-[#4a90e2] focus:ring-2 focus:ring-[#4a90e2] focus:ring-opacity-10"
-                    />
-                </div>
-
-                <div className="flex flex-col gap-2">
-                    <label className="font-semibold text-[#2c3e50] text-sm">Appearance</label>
-                    <textarea
-                        name="appearance"
-                        value={characterDetails.appearance}
-                        onChange={handleChange}
-                        placeholder="Detailed physical appearance"
-                        className="p-3 border-2 border-gray-200 rounded-lg text-sm text-gray-800 min-h-[100px] resize-y transition-all focus:outline-none focus:border-[#4a90e2] focus:ring-2 focus:ring-[#4a90e2] focus:ring-opacity-10"
-                    />
-                </div>
-
-                <div className="col-span-full flex justify-end gap-4 mt-6">
-                    <button 
-                        type="submit" 
-                        className="bg-[#4a90e2] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#357abd] transform hover:-translate-y-0.5 transition-all"
+                <div className="flex justify-end gap-4 mt-8 pt-6 px-8 py-4 border-t dark:border-gray-700 flex align-center justify-center">
+                    <button
+                        type="submit"
+                        className="button"
                     >
                         Save Character
                     </button>
-                    <button 
+                    <button
                         type="button"
                         onClick={generateCharacterImage}
                         disabled={isLoading}
-                        className="bg-[#4a90e2] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#357abd] transform hover:-translate-y-0.5 transition-all disabled:bg-gray-400 disabled:cursor-not-allowed disabled:transform-none"
+                        className={`button ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
                     >
                         {isLoading ? 'Generating Image...' : 'Generate Character Image'}
                     </button>
@@ -261,23 +287,59 @@ const CharacterDevelopment = () => {
             </form>
 
             {generatedImage && (
-                <div className="mt-8 text-center">
-                    <h3 className="text-2xl text-[#2c3e50] mb-5">Character Visualization</h3>
-                    <img 
-                        src={generatedImage} 
-                        alt={`${characterDetails.name}`}
-                        className="max-w-lg mx-auto rounded-xl shadow-md"
-                        onError={(e) => {
-                            console.error('Error loading image:', e);
-                            alert('Error loading the generated image');
-                        }}
-                    />
+                <div className="mt-16 card p-8">
+                    <h3 className="text-2xl font-semibold mb-8 dark:text-gray-100 text-center">Character Visualization</h3>
+                    <div className="max-w-2xl mx-auto">
+                        <img
+                            src={generatedImage}
+                            alt={`${characterDetails.name}`}
+                            className="w-full rounded-xl shadow-lg"
+                            onError={(e) => {
+                                console.error('Error loading image:', e);
+                                toast.error('Error loading the generated image');
+                            }}
+                        />
+                    </div>
                 </div>
             )}
 
-            {savedCharacters.length > 0 && <SavedCharactersList />}
+            {savedCharacters.length > 0 && (
+                <div className="mt-16 card p-8 ">
+                    <h3 className="text-2xl font-semibold mb-8 dark:text-gray-100 text-center">Saved Characters</h3>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                        {savedCharacters.map((char) => (
+                            <div key={char.id} className="character-card">
+                                <div className="character-card-content">
+                                    {char.image && (
+                                        <div className="mb-6">
+                                            <img 
+                                                src={char.image} 
+                                                alt={char.name}
+                                                className="w-full h-48 object-cover rounded-lg shadow-md"
+                                            />
+                                        </div>
+                                    )}
+                                    <div className="space-y-3">
+                                        <h4 className="text-lg font-semibold dark:text-gray-200">{char.name}</h4>
+                                        <p className="text-sm dark:text-gray-300">{char.role}</p>
+                                        <p className="text-xs dark:text-gray-400">
+                                            Created {new Date(char.timestamp).toLocaleDateString()}
+                                        </p>
+                                    </div>
+                                    <button 
+                                        onClick={() => setCharacterDetails(char)}
+                                        className="button-secondary text-sm w-full mt-4 hover-lift"
+                                    >
+                                        Edit Character
+                                    </button>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
 
-export default CharacterDevelopment; 
+export default CharacterDevelopment;

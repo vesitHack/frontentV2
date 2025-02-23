@@ -99,4 +99,215 @@
     .character-image-container img {
         max-width: 100%;
     }
-} 
+}
+
+.button-secondary {
+  @apply px-4 py-2 rounded-lg font-medium transition-all duration-200
+  dark:bg-gray-700/50 bg-gray-100
+  dark:hover:bg-gray-600/50 hover:bg-gray-200
+  dark:text-gray-200 text-gray-700
+  border dark:border-gray-600 border-gray-300
+  focus:ring-2 focus:ring-primary-500 focus:ring-offset-2;
+}
+
+.form-container {
+  @apply max-w-4xl mx-auto p-6 card;
+}
+
+.form-title {
+  @apply text-2xl font-bold mb-6 dark:text-gray-100 text-gray-800;
+}
+
+.form-subtitle {
+  @apply text-sm dark:text-gray-400 text-gray-600 mb-8;
+}
+
+.form-section {
+  @apply space-y-8 p-4 md:p-6 lg:p-8;
+}
+
+.form-group {
+  @apply input-container space-y-2;
+}
+
+.form-label {
+  @apply block text-sm font-semibold dark:text-gray-200 text-gray-900 mb-2;
+}
+
+.form-hint {
+  @apply text-xs dark:text-gray-400 text-gray-500 mt-1;
+}
+
+.input-container {
+  @apply max-w-2xl w-full transition-transform duration-200 space-y-3;
+}
+
+.card {
+  @apply rounded-xl shadow-lg backdrop-blur-md
+  dark:bg-gray-800/70 bg-white/95
+  dark:border-gray-700 border border-gray-200
+  transition-all duration-300
+  hover:shadow-xl hover:translate-y-[-2px]
+  p-4 md:p-6 lg:p-8;
+}
+
+.character-card {
+  @apply transition-all duration-300 ease-in-out
+  hover:shadow-2xl hover:translate-y-[-4px]
+  dark:hover:bg-gray-700/80
+  p-4 md:p-6;
+}
+
+.form-grid {
+  @apply grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 lg:gap-8;
+}
+
+.section-title {
+  @apply text-3xl font-bold mb-3 dark:text-gray-100 text-center;
+}
+
+.section-subtitle {
+  @apply dark:text-gray-300 text-gray-600 text-lg mb-12 text-center;
+}
+
+/* Add systematic margins */
+.mt-section {
+  @apply mt-8 md:mt-10 lg:mt-12;
+}
+
+.mb-section {
+  @apply mb-8 md:mb-10 lg:mb-12;
+}
+
+/* Improve textarea consistency */
+textarea.input-field {
+  @apply min-h-[100px] resize-vertical;
+}
+
+/* Enhance label spacing */
+.form-label {
+  @apply block text-sm font-semibold dark:text-gray-200 text-gray-900 mb-2;
+}
+
+/* Animations */
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.animate-slide-in {
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Grid Layout Styles */
+.character-grid {
+  @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 h-full;
+}
+
+.grid-column {
+  @apply space-y-6 h-full flex flex-col;
+  @apply bg-white/30 dark:bg-gray-800/30 rounded-lg p-6;
+}
+
+/* Enhanced textarea container with flex layout */
+.textarea-container {
+  @apply flex-1 flex flex-col min-h-[200px];
+}
+
+.textarea-container textarea {
+  @apply flex-1 min-h-[160px] resize-none;
+}
+
+/* Section headings */
+.section-heading {
+  @apply text-lg font-semibold mb-6 dark:text-gray-200 text-gray-800 pb-2 border-b dark:border-gray-700;
+}
+
+/* Card content layout */
+.character-card-content {
+  @apply flex flex-col h-full;
+}
+
+/* Equal height inputs */
+.input-group {
+  @apply flex flex-col;
+}
+
+.input-group .input-field {
+  @apply h-[42px];
+}
+
+/* Full width section styling */
+.full-width-section {
+  @apply mt-8 bg-white/30 dark:bg-gray-800/30 rounded-lg p-6;
+}
+
+/* Responsive padding adjustments */
+@screen md {
+  .grid-column {
+    @apply p-8;
+  }
+  
+  .full-width-section {
+    @apply p-8;
+  }
+}
+
+/* Full-width section */
+.full-width-section {
+  @apply lg:col-span-3 w-full;
+}
+
+/* Equal height cards */
+.character-card {
+  @apply h-full flex flex-col transition-all duration-300 ease-in-out
+  hover:shadow-2xl hover:translate-y-[-4px]
+  dark:hover:bg-gray-700/80 p-6;
+}
+
+.character-card-content {
+  @apply flex-1 flex flex-col justify-between;
+}
+
+/* Input Groups */
+.input-group {
+  @apply flex flex-col h-full;
+}
+
+.input-group .input-field {
+  @apply flex-1;
+}
+
+/* Consistent spacing */
+.form-section {
+  @apply p-8 grid gap-8;
+}
+
+/* Card hover effect */
+.hover-lift {
+  @apply transition-transform duration-200 hover:-translate-y-1;
+}
+
+/* Enhanced input container */
+.input-container {
+  @apply max-w-full w-full transition-transform duration-200 space-y-3;
+}

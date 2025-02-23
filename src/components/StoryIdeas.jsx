@@ -115,23 +115,22 @@ Generated on: ${new Date().toLocaleString()}
   };
 
   return (
-    <div className="max-w-6xl mx-auto px-4">
-      <div className="mb-8 text-center animate-fade-in">
-        <h2 className="text-3xl font-bold text-gray-800 mb-2">Story Idea Generator</h2>
-        <p className="text-gray-600">Generate unique story ideas based on your premise and preferences</p>
+    <div className="max-w-4xl mx-auto px-4">
+      <div className="mb-8 text-center">
+        <h2 className="text-3xl font-bold mb-2 dark:text-gray-100">Story Idea Generator</h2>
+        <p className="dark:text-gray-400">Generate unique story ideas based on your premise and preferences</p>
         
-        {/* Drafts Management */}
         <div className="mt-4 flex justify-center gap-4">
           <button
             onClick={() => setShowDrafts(!showDrafts)}
-            className="btn-secondary"
+            className="button-secondary"
           >
             {showDrafts ? 'Hide Drafts' : 'Show Drafts'}
           </button>
           {(formData.premise || ideas) && (
             <button
               onClick={saveDraft}
-              className="btn-secondary"
+              className="button-secondary"
             >
               Save Draft
             </button>
@@ -139,27 +138,26 @@ Generated on: ${new Date().toLocaleString()}
         </div>
       </div>
 
-      {/* Drafts Panel */}
       {showDrafts && (
-        <div className="mb-8 card animate-fade-in">
-          <h3 className="text-xl font-semibold text-gray-800 mb-4">Saved Drafts</h3>
+        <div className="mb-8 card p-6">
+          <h3 className="text-xl font-semibold mb-4 dark:text-gray-100">Saved Drafts</h3>
           <div className="space-y-4">
             {drafts.map(draft => (
-              <div key={draft.id} className="p-4 bg-light-200 rounded-lg flex justify-between items-center">
+              <div key={draft.id} className="card p-4 flex justify-between items-center">
                 <div>
-                  <p className="font-medium text-gray-800">{draft.premise.substring(0, 50)}...</p>
-                  <p className="text-sm text-gray-600">Genre: {draft.genre} • {draft.date}</p>
+                  <p className="font-medium dark:text-gray-200">{draft.premise.substring(0, 50)}...</p>
+                  <p className="text-sm dark:text-gray-400 text-gray-600">Genre: {draft.genre} • {draft.date}</p>
                 </div>
                 <div className="flex gap-2">
                   <button
                     onClick={() => loadDraft(draft)}
-                    className="btn-secondary py-2 px-3"
+                    className="button-secondary py-2 px-3"
                   >
                     Load
                   </button>
                   <button
                     onClick={() => deleteDraft(draft.id)}
-                    className="py-2 px-3 rounded-lg text-red-600 font-medium bg-red-50 hover:bg-red-100 transition-all duration-200"
+                    className="py-2 px-3 rounded-lg text-red-600 dark:text-red-400 font-medium hover:bg-red-50 dark:hover:bg-red-900/20 transition-all duration-200"
                   >
                     Delete
                   </button>
@@ -167,22 +165,22 @@ Generated on: ${new Date().toLocaleString()}
               </div>
             ))}
             {drafts.length === 0 && (
-              <p className="text-gray-600 text-center">No saved drafts yet</p>
+              <p className="text-center dark:text-gray-400 text-gray-600">No saved drafts yet</p>
             )}
           </div>
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="card space-y-8 animate-slide-in">
-        <div>
-          <label className="block text-base font-medium text-gray-700 mb-3">
+      <form onSubmit={handleSubmit} className="card p-6 space-y-6">
+        <div className="input-container">
+          <label className="form-label">
             Story Premise
             <span className="text-red-500">*</span>
           </label>
           <div className="relative">
             <textarea
               required
-              className="w-full px-6 py-4 bg-light-200 text-gray-800 rounded-xl border border-light-400 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 focus:outline-none transition-colors duration-200 text-lg"
+              className="input-field"
               placeholder="Enter your story premise..."
               rows="4"
               value={formData.premise}
@@ -191,20 +189,20 @@ Generated on: ${new Date().toLocaleString()}
                 setCharCount({ ...charCount, premise: e.target.value.length });
               }}
             />
-            <span className="absolute bottom-2 right-2 text-sm text-gray-500">
+            <span className="absolute bottom-2 right-2 text-sm dark:text-gray-400 text-gray-500">
               {charCount.premise}/1000
             </span>
           </div>
         </div>
 
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+        <div className="input-container">
+          <label className="form-label">
             Genre
           </label>
           <div className="relative">
             <input
               type="text"
-              className="w-full px-6 py-4 bg-light-200 text-gray-800 rounded-xl border border-light-400 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 focus:outline-none transition-colors duration-200 text-lg"
+              className="input-field"
               placeholder="e.g., Fantasy, Sci-Fi, Romance..."
               value={formData.genre}
               onChange={(e) => {
@@ -212,20 +210,20 @@ Generated on: ${new Date().toLocaleString()}
                 setCharCount({ ...charCount, genre: e.target.value.length });
               }}
             />
-            <span className="absolute bottom-2 right-2 text-sm text-gray-500">
-              {charCount.genre}/1000
+            <span className="absolute bottom-2 right-2 text-sm dark:text-gray-400 text-gray-500">
+              {charCount.genre}/100
             </span>
           </div>
         </div>
 
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+        <div className="input-container">
+          <label className="form-label">
             Themes (comma-separated)
           </label>
           <div className="relative">
             <input
               type="text"
-              className="w-full px-6 py-4 bg-light-200 text-gray-800 rounded-xl border border-light-400 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 focus:outline-none transition-colors duration-200 text-lg"
+              className="input-field"
               placeholder="e.g., redemption, love, sacrifice..."
               value={formData.themes}
               onChange={(e) => {
@@ -233,35 +231,33 @@ Generated on: ${new Date().toLocaleString()}
                 setCharCount({ ...charCount, themes: e.target.value.length });
               }}
             />
-            <span className="absolute bottom-2 right-2 text-sm text-gray-500">
-              {charCount.themes}/1000
+            <span className="absolute bottom-2 right-2 text-sm dark:text-gray-400 text-gray-500">
+              {charCount.themes}/100
             </span>
           </div>
         </div>
 
-        <button
-          type="submit"
-          disabled={loading}
-          className={`w-full py-4 px-6 rounded-xl text-white font-medium text-lg ${
-            loading
-              ? 'bg-gray-400 cursor-not-allowed'
-              : 'bg-primary-600 hover:bg-primary-700'
-          } transition-colors duration-200 shadow-sm`}
-        >
-          {loading ? 'Generating...' : 'Generate Ideas'}
-        </button>
+        <div className="input-container">
+          <button
+            type="submit"
+            disabled={loading}
+            className={`button w-full ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+          >
+            {loading ? 'Generating...' : 'Generate Ideas'}
+          </button>
+        </div>
       </form>
 
       {ideas && (
-        <div className="mt-8 card animate-fade-in">
-          <h3 className="text-xl font-semibold text-gray-800 mb-4">Generated Ideas</h3>
-          <div className="prose max-w-none">
-            <div className="text-gray-600 whitespace-pre-line">{ideas}</div>
+        <div className="mt-8 card p-6">
+          <h3 className="text-xl font-semibold mb-4 dark:text-gray-100 text-gray-900">Generated Ideas</h3>
+          <div className="prose max-w-none dark:prose-invert">
+            <div className="dark:text-gray-300 text-gray-600 whitespace-pre-line">{ideas}</div>
           </div>
           <div className="flex justify-end mt-4">
             <button
               onClick={exportToFile}
-              className="btn-secondary flex items-center gap-2"
+              className="button-secondary flex items-center gap-2"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />

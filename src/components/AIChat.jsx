@@ -17,10 +17,10 @@ const AIChat = () => {
   return (
     <div className="max-w-6xl mx-auto px-4">
       <div className="mb-8 text-center animate-fade-in">
-        <h2 className="text-3xl font-bold text-gray-800 dark:text-gray-100 mb-2">
+        <h2 className="text-3xl font-bold text-gray-100 dark:text-gray-100 mb-2">
           Dialogue Practice
         </h2>
-        <p className="text-gray-600 dark:text-gray-300">
+        <p className="text-gray-300 dark:text-gray-300">
           Practice your dialogue writing with AI-powered conversation
         </p>
       </div>

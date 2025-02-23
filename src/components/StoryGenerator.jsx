@@ -108,111 +108,97 @@ const StoryGenerator = () => {
     };
 
     return (
-        <div className="max-w-6xl mx-auto px-4">
-            <div className="mb-8 text-center animate-fade-in">
-                <h2 className="text-3xl font-bold text-gray-800 dark:text-gray-100 mb-2">
-                    Story Generator Playground
-                </h2>
-                <p className="text-gray-600 dark:text-gray-300">
-                    Create detailed story concepts with AI assistance
-                </p>
+        <div className="max-w-4xl mx-auto px-4">
+            <div className="mb-8 text-center">
+                <h2 className="text-3xl font-bold mb-2 dark:text-gray-100">Story Generator Playground</h2>
+                <p className="dark:text-gray-300 ">Create detailed story concepts with AI assistance</p>
             </div>
 
-            <div className="card animate-slide-in mb-8">
-                <form onSubmit={handleSubmit} className="space-y-6">
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                            Genre
-                        </label>
-                        <select
-                            name="genre"
-                            value={formData.genre}
-                            onChange={handleChange}
-                            required
-                            className="input-field"
-                        >
-                            <option value="">Select Genre</option>
-                            <option value="fantasy">Fantasy</option>
-                            <option value="sci-fi">Science Fiction</option>
-                            <option value="mystery">Mystery</option>
-                            <option value="romance">Romance</option>
-                            <option value="thriller">Thriller</option>
-                            <option value="horror">Horror</option>
-                        </select>
-                    </div>
+            <form onSubmit={handleSubmit} className="card p-6 space-y-6">
+                <div className="input-container">
+                    <label className="form-label">Genre</label>
+                    <select
+                        name="genre"
+                        value={formData.genre}
+                        onChange={handleChange}
+                        required
+                        className="input-field text-gray-700"
+                    >
+                        <option value="" className="text-gray-500">Select Genre</option>
+                        <option value="fantasy">Fantasy</option>
+                        <option value="sci-fi">Science Fiction</option>
+                        <option value="mystery">Mystery</option>
+                        <option value="romance">Romance</option>
+                        <option value="thriller">Thriller</option>
+                        <option value="horror">Horror</option>
+                    </select>
+                </div>
 
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                            Tone
-                        </label>
-                        <select
-                            name="tone"
-                            value={formData.tone}
-                            onChange={handleChange}
-                            required
-                            className="input-field"
-                        >
-                            <option value="">Select Tone</option>
-                            <option value="dark">Dark</option>
-                            <option value="lighthearted">Lighthearted</option>
-                            <option value="suspenseful">Suspenseful</option>
-                            <option value="humorous">Humorous</option>
-                            <option value="dramatic">Dramatic</option>
-                        </select>
-                    </div>
+                <div className="input-container">
+                    <label className="form-label">Tone</label>
+                    <select
+                        name="tone"
+                        value={formData.tone}
+                        onChange={handleChange}
+                        required
+                        className="input-field text-gray-700"
+                    >
+                        <option value="" className="text-gray-500">Select Tone</option>
+                        <option value="dark">Dark</option>
+                        <option value="lighthearted">Lighthearted</option>
+                        <option value="suspenseful">Suspenseful</option>
+                        <option value="humorous">Humorous</option>
+                        <option value="dramatic">Dramatic</option>
+                    </select>
+                </div>
 
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                            Keywords/Themes
-                        </label>
-                        <input
-                            type="text"
-                            name="keywords"
-                            placeholder="Enter keywords (comma-separated)"
-                            value={formData.keywords}
-                            onChange={handleChange}
-                            required
-                            className="input-field"
-                        />
-                    </div>
+                <div className="input-container">
+                    <label className="form-label">Keywords/Themes</label>
+                    <input
+                        type="text"
+                        name="keywords"
+                        placeholder="Enter keywords (comma-separated)"
+                        value={formData.keywords}
+                        onChange={handleChange}
+                        required
+                        className="input-field"
+                    />
+                </div>
 
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                            Story Length
-                        </label>
-                        <select
-                            name="storyLength"
-                            value={formData.storyLength}
-                            onChange={handleChange}
-                            required
-                            className="input-field"
-                        >
-                            <option value="">Select Story Length</option>
-                            <option value="flash">Flash Fiction (&lt;1000 words)</option>
-                            <option value="short">Short Story (1000-7500 words)</option>
-                            <option value="novella">Novella (7500-40000 words)</option>
-                            <option value="novel">Novel (40000+ words)</option>
-                        </select>
-                    </div>
+                <div className="input-container">
+                    <label className="form-label">Story Length</label>
+                    <select
+                        name="storyLength"
+                        value={formData.storyLength}
+                        onChange={handleChange}
+                        required
+                        className="input-field text-gray-700"
+                    >
+                        <option value="" className="text-gray-500">Select Story Length</option>
+                        <option value="flash">Flash Fiction (&lt;1000 words)</option>
+                        <option value="short">Short Story (1000-7500 words)</option>
+                        <option value="novella">Novella (7500-40000 words)</option>
+                        <option value="novel">Novel (40000+ words)</option>
+                    </select>
+                </div>
 
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                            Additional Details
-                        </label>
-                        <textarea
-                            name="additionalDetails"
-                            placeholder="Any specific requirements or details..."
-                            value={formData.additionalDetails}
-                            onChange={handleChange}
-                            rows="4"
-                            className="input-field"
-                        />
-                    </div>
+                <div className="input-container">
+                    <label className="form-label">Additional Details</label>
+                    <textarea
+                        name="additionalDetails"
+                        placeholder="Any specific requirements or details..."
+                        value={formData.additionalDetails}
+                        onChange={handleChange}
+                        rows="4"
+                        className="input-field"
+                    />
+                </div>
 
+                <div className="input-container">
                     <button
                         type="submit"
                         disabled={loading}
-                        className="btn-primary w-full flex items-center justify-center"
+                        className={`button w-full ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
                     >
                         {loading ? (
                             <>
@@ -226,43 +212,41 @@ const StoryGenerator = () => {
                             'Generate Story'
                         )}
                     </button>
-                </form>
-            </div>
+                </div>
+            </form>
 
             {response && (
-                <div className="card animate-fade-in" ref={responseRef}>
-                    <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-100 mb-6">
-                        Generated Story Concept
-                    </h3>
+                <div className="mt-8 card p-6">
+                    <h3 className="text-xl font-semibold mb-6 dark:text-gray-100 text-gray-900">Generated Story Concept</h3>
 
                     <div className="space-y-6">
-                        <div className="bg-light-200 dark:bg-dark-200 p-4 rounded-lg">
-                            <h4 className="font-medium text-gray-700 dark:text-gray-300 mb-2">Story Idea</h4>
-                            <p className="text-gray-600 dark:text-gray-400">{response.storyIdea}</p>
+                        <div className="card p-4">
+                            <h4 className="font-medium mb-2 dark:text-gray-200">Story Idea</h4>
+                            <p className="dark:text-gray-300">{response.storyIdea}</p>
                         </div>
 
-                        <div className="bg-light-200 dark:bg-dark-200 p-4 rounded-lg">
-                            <h4 className="font-medium text-gray-700 dark:text-gray-300 mb-2">Plot Outline</h4>
+                        <div className="card p-4">
+                            <h4 className="font-medium mb-2 dark:text-gray-200">Plot Outline</h4>
                             <ul className="list-disc list-inside space-y-2">
                                 {response.plotOutline.map((point, index) => (
-                                    <li key={index} className="text-gray-600 dark:text-gray-400">{point}</li>
+                                    <li key={index} className="dark:text-gray-300">{point}</li>
                                 ))}
                             </ul>
                         </div>
 
-                        <div className="bg-light-200 dark:bg-dark-200 p-4 rounded-lg">
-                            <h4 className="font-medium text-gray-700 dark:text-gray-300 mb-4">Main Characters</h4>
+                        <div className="card p-4">
+                            <h4 className="font-medium mb-4 dark:text-gray-200">Main Characters</h4>
                             <div className="grid gap-4">
                                 {response.mainCharacters.map((character, index) => (
-                                    <div key={index} className="bg-white dark:bg-dark-300 p-4 rounded-lg">
-                                        <h5 className="font-medium text-primary-600 dark:text-primary-400 mb-2">{character.name}</h5>
-                                        <p className="text-gray-700 dark:text-gray-300 mb-2">
+                                    <div key={index} className="card p-4">
+                                        <h5 className="font-medium text-primary-500 dark:text-primary-400 mb-2">{character.name}</h5>
+                                        <p className="dark:text-gray-200 mb-2">
                                             <span className="font-medium">Role:</span> {character.role}
                                         </p>
-                                        <p className="text-gray-600 dark:text-gray-400 mb-4">{character.description}</p>
+                                        <p className="dark:text-gray-300 mb-4">{character.description}</p>
                                         <button 
                                             onClick={() => handleCharacterDevelopment(character)}
-                                            className="btn-secondary"
+                                            className="button-secondary"
                                         >
                                             Develop Character
                                         </button>
@@ -271,26 +255,26 @@ const StoryGenerator = () => {
                             </div>
                         </div>
 
-                        <div className="bg-light-200 dark:bg-dark-200 p-4 rounded-lg">
-                            <h4 className="font-medium text-gray-700 dark:text-gray-300 mb-2">Setting</h4>
-                            <p className="text-gray-600 dark:text-gray-400">{response.setting}</p>
+                        <div className="card p-4">
+                            <h4 className="font-medium mb-2 dark:text-gray-200">Setting</h4>
+                            <p className="dark:text-gray-300">{response.setting}</p>
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div className="bg-light-200 dark:bg-dark-200 p-4 rounded-lg">
-                                <h4 className="font-medium text-gray-700 dark:text-gray-300 mb-2">Themes</h4>
+                            <div className="card p-4">
+                                <h4 className="font-medium mb-2 dark:text-gray-200">Themes</h4>
                                 <ul className="list-disc list-inside space-y-1">
                                     {response.themes.map((theme, index) => (
-                                        <li key={index} className="text-gray-600 dark:text-gray-400">{theme}</li>
+                                        <li key={index} className="dark:text-gray-300">{theme}</li>
                                     ))}
                                 </ul>
                             </div>
 
-                            <div className="bg-light-200 dark:bg-dark-200 p-4 rounded-lg">
-                                <h4 className="font-medium text-gray-700 dark:text-gray-300 mb-2">Potential Conflicts</h4>
+                            <div className="card p-4">
+                                <h4 className="font-medium mb-2 dark:text-gray-200">Potential Conflicts</h4>
                                 <ul className="list-disc list-inside space-y-1">
                                     {response.potentialConflicts.map((conflict, index) => (
-                                        <li key={index} className="text-gray-600 dark:text-gray-400">{conflict}</li>
+                                        <li key={index} className="dark:text-gray-300">{conflict}</li>
                                     ))}
                                 </ul>
                             </div>
@@ -302,4 +286,4 @@ const StoryGenerator = () => {
     );
 };
 
-export default StoryGenerator; 
+export default StoryGenerator;

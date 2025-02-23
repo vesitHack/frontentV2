@@ -60,58 +60,56 @@ function App() {
 
   return (
     <Router>
-      <div className={`min-h-screen antialiased font-sans ${isDarkMode ? 'dark bg-dark-500' : 'bg-light-100'}`}>
+      <div className={`min-h-screen antialiased font-sans relative ${isDarkMode ? 'dark' : ''}`}>
         <Toaster 
           position="top-right" 
           toastOptions={{
-            className: '!bg-white !text-gray-800',
+            className: `${isDarkMode ? '!bg-gray-800 !text-gray-100' : '!bg-white !text-gray-800'}`,
             duration: 3000,
             style: {
-              background: '#fff',
-              color: '#1f2937',
               padding: '16px',
-              boxShadow: '0 2px 15px -3px rgba(0, 0, 0, 0.07)',
+              boxShadow: '0 2px 15px -3px rgba(0, 0, 0, 0.15)',
             },
           }}
         />
         
         {/* Sidebar */}
-        <div className={`fixed inset-y-0 left-0 z-50 w-64 transform transition-transform duration-300 ease-in-out ${
-          isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} ${
-          isDarkMode ? 'bg-dark-100 border-dark-300' : 'bg-white border-light-400'}`}>
+        <div className={`fixed inset-y-0 left-0 z-50 w-64 transform transition-all duration-300 ease-in-out ${
+          isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} 
+          card backdrop-blur-lg ${isDarkMode ? 'bg-gray-900/90' : 'bg-white/90'}`}>
           <div className="flex flex-col h-full">
-            <div className={`flex items-center justify-center h-20 px-4 ${
-              isDarkMode ? 'bg-dark-200 border-dark-300' : 'bg-light-200 border-light-400'} border-b`}>
-              <h1 className={`text-xl font-bold whitespace-nowrap ${
-                isDarkMode ? 'text-gray-100' : 'text-gray-800'}`}>
+            <div className={`flex items-center justify-center h-20 px-4 border-b
+              ${isDarkMode ? 'border-gray-700/50' : 'border-gray-200/50'}`}>
+              <h1 className={`text-xl font-bold whitespace-nowrap 
+                ${isDarkMode ? 'text-gray-100' : 'text-gray-800'}`}>
                 Storytelling<br/>Companion
               </h1>
             </div>
-            <nav className="flex-1 px-4 py-4 space-y-2 overflow-y-auto scrollbar-thin scrollbar-thumb-light-400 scrollbar-track-light-200">
+            <nav className="flex-1 px-4 py-4 space-y-1 overflow-y-auto">
               {navigation.map((item) => (
                 <Link
                   key={item.name}
                   to={item.path}
-                  className={`flex items-center px-4 py-3 rounded-lg transition-all duration-200 ease-in-out group ${
+                  className={`flex items-center px-4 py-2.5 rounded-lg transition-all duration-200 ease-in-out group ${
                     isDarkMode 
-                      ? 'text-gray-300 hover:bg-dark-300 hover:text-primary-400' 
-                      : 'text-gray-600 hover:bg-primary-50 hover:text-primary-600'
+                      ? 'text-gray-300 hover:bg-white/10 hover:text-primary-400' 
+                      : 'text-gray-600 hover:bg-gray-900/5 hover:text-primary-600'
                   }`}
                 >
-                  <item.icon className="w-6 h-6 mr-3 transition-colors duration-200" />
+                  <item.icon className="w-5 h-5 mr-3 transition-colors duration-200" />
                   <span className="font-medium">{item.name}</span>
                 </Link>
               ))}
             </nav>
 
             {/* Theme Toggle Button */}
-            <div className={`p-4 border-t ${isDarkMode ? 'border-dark-300' : 'border-light-400'}`}>
+            <div className={`p-4 border-t ${isDarkMode ? 'border-gray-700/50' : 'border-gray-200/50'}`}>
               <button
                 onClick={toggleTheme}
                 className={`flex items-center justify-center w-full px-4 py-2 rounded-lg transition-all duration-200 ${
                   isDarkMode
-                    ? 'bg-dark-300 text-gray-300 hover:bg-dark-200'
-                    : 'bg-light-200 text-gray-600 hover:bg-light-300'
+                    ? 'bg-gray-800/50 text-gray-300 hover:bg-gray-700/50'
+                    : 'bg-gray-100/50 text-gray-600 hover:bg-gray-200/50'
                 }`}
               >
                 {isDarkMode ? (
@@ -132,17 +130,19 @@ function App() {
 
         {/* Main Content */}
         <div className={`transition-all duration-300 ease-in-out ${isSidebarOpen ? 'ml-64' : 'ml-0'}`}>
-          <main className="w-full px-8 py-8">
+          <main className="w-full p-8">
             <button
               onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-              className="fixed top-4 left-4 z-50 p-2 text-gray-600 bg-white rounded-md hover:bg-light-200 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 shadow-soft"
+              className={`fixed top-4 left-4 z-50 p-2 rounded-lg transition-all duration-200 
+                focus:outline-none focus:ring-2 focus:ring-primary-500 card
+                ${isDarkMode ? 'text-gray-300 hover:bg-gray-700/50' : 'text-gray-600 hover:bg-gray-100/50'}`}
               aria-label="Toggle Sidebar"
             >
               <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
               </svg>
             </button>
-            <div className="w-full mx-auto">
+            <div className="w-full max-w-5xl mx-auto relative z-10">
               <Routes>
                 {navigation.map((item) => (
                   <Route key={item.path} path={item.path} element={<item.component />} />

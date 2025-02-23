@@ -21,37 +21,29 @@ export default {
           900: '#4c1d95',
         },
         light: {
-          100: '#ffffff',
-          200: '#fafafa',
-          300: '#f5f5f5',
-          400: '#e5e5e5',
-          500: '#d4d4d4',
+          100: '#f8fafc',
+          200: '#f1f5f9',
+          300: '#e2e8f0',
+          400: '#cbd5e1',
         },
         dark: {
-          100: '#1E293B',
-          200: '#1a1e2c',
-          300: '#151825',
-          400: '#111422',
-          500: '#0d1117',
+          100: '#1a1b26',
+          200: '#16171f',
+          300: '#13141a',
+          400: '#0f1015',
+          500: '#0c0c0f',
         }
       },
-      typography: (theme) => ({
-        invert: {
-          css: {
-            '--tw-prose-body': theme('colors.gray[300]'),
-            '--tw-prose-headings': theme('colors.white'),
-            '--tw-prose-links': theme('colors.primary[400]'),
-          },
-        },
-      }),
       boxShadow: {
-        'soft': '0 2px 15px -3px rgba(0, 0, 0, 0.07), 0 10px 20px -2px rgba(0, 0, 0, 0.04)',
+        'soft': '0 2px 15px -3px rgba(0, 0, 0, 0.07)',
+        'medium': '0 4px 20px -5px rgba(0, 0, 0, 0.1)',
+      },
+      backgroundOpacity: {
+        '85': '0.85',
+        '95': '0.95',
       }
     },
   },
-  plugins: [
-    require('@tailwindcss/typography'),
-    require('tailwind-scrollbar')({ nocompatible: true }),
-  ],
+  plugins: [],
 }
 

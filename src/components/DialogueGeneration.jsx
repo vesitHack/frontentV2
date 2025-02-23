@@ -27,36 +27,36 @@ export default function DialogueGeneration() {
   };
 
   return (
-    <div className="max-w-5xl mx-auto px-4">
+    <div className="max-w-4xl mx-auto px-4">
       <div className="mb-8 text-center">
-        <h2 className="text-3xl font-bold text-gray-800 mb-2">Dialogue Generation</h2>
-        <p className="text-gray-600">Create natural and engaging dialogue for your characters</p>
+        <h2 className="text-3xl font-bold mb-2 dark:text-gray-100">Dialogue Generation</h2>
+        <p className="dark:text-gray-300">Create natural and engaging dialogue for your characters</p>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-6 bg-white p-6 rounded-xl shadow-soft mx-auto">
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+      <form onSubmit={handleSubmit} className="card p-6 space-y-6">
+        <div className="input-container">
+          <label className="form-label">
             Character Name
             <span className="text-red-500">*</span>
           </label>
           <input
             required
             type="text"
-            className="w-full px-4 py-2 bg-light-200 text-gray-800 rounded-lg border border-light-400 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 focus:outline-none transition-colors duration-200"
+            className="input-field"
             placeholder="Enter character name..."
             value={formData.character_name}
             onChange={(e) => setFormData({ ...formData, character_name: e.target.value })}
           />
         </div>
 
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+        <div className="input-container">
+          <label className="form-label">
             Context
             <span className="text-red-500">*</span>
           </label>
           <textarea
             required
-            className="w-full px-4 py-2 bg-light-200 text-gray-800 rounded-lg border border-light-400 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 focus:outline-none transition-colors duration-200"
+            className="input-field"
             rows="4"
             placeholder="Describe the scene or situation..."
             value={formData.context}
@@ -64,37 +64,35 @@ export default function DialogueGeneration() {
           />
         </div>
 
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+        <div className="input-container">
+          <label className="form-label">
             Character Personality
           </label>
           <textarea
-            className="w-full px-4 py-2 bg-light-200 text-gray-800 rounded-lg border border-light-400 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 focus:outline-none transition-colors duration-200"
-            rows="2"
+            className="input-field"
+            rows="3"
             placeholder="Describe the character's personality..."
             value={formData.personality}
             onChange={(e) => setFormData({ ...formData, personality: e.target.value })}
           />
         </div>
 
-        <button
-          type="submit"
-          disabled={loading}
-          className={`w-full py-4 px-6 rounded-lg text-white font-medium text-lg ${
-            loading
-              ? 'bg-gray-400 cursor-not-allowed'
-              : 'bg-primary-600 hover:bg-primary-700'
-          } transition-colors duration-200 shadow-sm`}
-        >
-          {loading ? 'Generating...' : 'Generate'}
-        </button>
+        <div className="input-container">
+          <button
+            type="submit"
+            disabled={loading}
+            className={`button w-full ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+          >
+            {loading ? 'Generating...' : 'Generate Dialogue'}
+          </button>
+        </div>
       </form>
 
       {dialogue && (
-        <div className="mt-8 bg-white p-6 rounded-xl shadow-soft">
-          <h3 className="text-xl font-semibold text-gray-800 mb-4">Generated Dialogue</h3>
-          <div className="prose max-w-none">
-            <div className="text-gray-600 whitespace-pre-line">{dialogue}</div>
+        <div className="mt-8 card p-6">
+          <h3 className="text-xl font-semibold mb-4 dark:text-gray-100 text-gray-900">Generated Dialogue</h3>
+          <div className="prose max-w-none dark:prose-invert">
+            <div className="dark:text-gray-300 text-gray-600 whitespace-pre-line">{dialogue}</div>
           </div>
         </div>
       )}
