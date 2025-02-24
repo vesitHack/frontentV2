@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, Link, Navigate } from 'react-router-dom'
 import { Toaster } from 'react-hot-toast'
 import {
   BookOpenIcon,
@@ -10,7 +10,9 @@ import {
   MoonIcon,
   SunIcon,
   ChatBubbleOvalLeftEllipsisIcon,
-  BeakerIcon
+  BeakerIcon,
+  VideoCameraIcon,
+  ChatBubbleBottomCenterTextIcon
 } from '@heroicons/react/24/outline'
 
 // Components
@@ -22,6 +24,8 @@ import DialogueGeneration from './components/DialogueGeneration'
 import TextAnalysis from './components/TextAnalysis'
 import AIChat from './components/AIChat'
 import CharacterDevelopment from './components/CharacterDevelopment'
+import ShortVideoGenerator from './components/ShortVideoGenerator'
+import DialogueDelivery from './components/DialogueDelivery'
 
 function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true)
@@ -48,13 +52,13 @@ function App() {
   }
 
   const navigation = [
-    { name: 'Story Ideas', icon: SparklesIcon, component: StoryIdeas, path: '/' },
-    { name: 'Story Generator', icon: BeakerIcon, component: StoryGenerator, path: '/generator' },
+    { name: 'Story Generator', icon: BeakerIcon, component: StoryGenerator, path: '/' },
     { name: 'Character Development', icon: UserIcon, component: CharacterDevelopment, path: '/characters' },
+    { name: 'Dialogue Delivery', icon: ChatBubbleBottomCenterTextIcon, component: DialogueDelivery, path: '/dialogue' },
+    { name: 'Short Video Story Generator', icon: VideoCameraIcon, component: ShortVideoGenerator, path: '/shorts' },
+    { name: 'Voice Dialogue Trainer Agent', icon: ChatBubbleOvalLeftEllipsisIcon, component: AIChat, path: '/practice' },
+    { name: 'Story Ideas', icon: SparklesIcon, component: StoryIdeas, path: '/story-ideas' },
     { name: 'Plot Development', icon: BookOpenIcon, component: PlotDevelopment, path: '/plot' },
-    { name: 'Character Creation', icon: UserIcon, component: CharacterCreation, path: '/character' },
-    { name: 'Dialogue Generation', icon: ChatBubbleLeftRightIcon, component: DialogueGeneration, path: '/dialogue' },
-    { name: 'Dialogue Practice', icon: ChatBubbleOvalLeftEllipsisIcon, component: AIChat, path: '/practice' },
     { name: 'Text Analysis', icon: DocumentTextIcon, component: TextAnalysis, path: '/analysis' },
   ]
 
@@ -73,13 +77,13 @@ function App() {
           }}
         />
         
-        {/* Sidebar */}
-        <div className={`fixed inset-y-0 left-0 z-50 w-64 transform transition-all duration-300 ease-in-out ${
+        {/* Sidebar - Remove backdrop-blur */}
+        <div className={`fixed inset-y-0 left-0 z-50 w-64 transform transition-transform duration-300 ease-in-out ${
           isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} 
-          card backdrop-blur-lg ${isDarkMode ? 'bg-gray-900/90' : 'bg-white/90'}`}>
+          ${isDarkMode ? 'bg-gray-900 border-r border-gray-700' : 'bg-white border-r border-gray-200'}`}>
           <div className="flex flex-col h-full">
             <div className={`flex items-center justify-center h-20 px-4 border-b
-              ${isDarkMode ? 'border-gray-700/50' : 'border-gray-200/50'}`}>
+              ${isDarkMode ? 'border-gray-700' : 'border-gray-200'}`}>
               <h1 className={`text-xl font-bold whitespace-nowrap 
                 ${isDarkMode ? 'text-gray-100' : 'text-gray-800'}`}>
                 Storytelling<br/>Companion
@@ -92,8 +96,8 @@ function App() {
                   to={item.path}
                   className={`flex items-center px-4 py-2.5 rounded-lg transition-all duration-200 ease-in-out group ${
                     isDarkMode 
-                      ? 'text-gray-300 hover:bg-white/10 hover:text-primary-400' 
-                      : 'text-gray-600 hover:bg-gray-900/5 hover:text-primary-600'
+                      ? 'text-gray-300 hover:bg-gray-800 hover:text-primary-400' 
+                      : 'text-gray-600 hover:bg-gray-50 hover:text-primary-600'
                   }`}
                 >
                   <item.icon className="w-5 h-5 mr-3 transition-colors duration-200" />
@@ -102,14 +106,14 @@ function App() {
               ))}
             </nav>
 
-            {/* Theme Toggle Button */}
-            <div className={`p-4 border-t ${isDarkMode ? 'border-gray-700/50' : 'border-gray-200/50'}`}>
+            {/* Theme Toggle Button - Updated styling */}
+            <div className={`p-4 border-t ${isDarkMode ? 'border-gray-700' : 'border-gray-200'}`}>
               <button
                 onClick={toggleTheme}
                 className={`flex items-center justify-center w-full px-4 py-2 rounded-lg transition-all duration-200 ${
                   isDarkMode
-                    ? 'bg-gray-800/50 text-gray-300 hover:bg-gray-700/50'
-                    : 'bg-gray-100/50 text-gray-600 hover:bg-gray-200/50'
+                    ? 'bg-gray-800 text-gray-300 hover:bg-gray-700'
+                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                 }`}
               >
                 {isDarkMode ? (
@@ -147,6 +151,7 @@ function App() {
                 {navigation.map((item) => (
                   <Route key={item.path} path={item.path} element={<item.component />} />
                 ))}
+                <Route path="*" element={<Navigate to="/" replace />} />
               </Routes>
             </div>
           </main>

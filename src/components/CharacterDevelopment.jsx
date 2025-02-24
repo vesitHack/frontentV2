@@ -113,48 +113,13 @@ const CharacterDevelopment = () => {
         }
     };
 
-    // Add a section to display saved characters
-    const SavedCharactersList = () => (
-        <div className="mt-8 card p-6">
-            <h3 className="text-xl font-semibold mb-4 dark:text-gray-100">Saved Characters</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {savedCharacters.map((char) => (
-                    <div key={char.id} className="card p-4">
-                        {char.image && (
-                            <img 
-                                src={char.image} 
-                                alt={char.name}
-                                className="w-full h-48 object-cover rounded-lg mb-3"
-                            />
-                        )}
-                        <h4 className="text-lg font-medium dark:text-gray-200">{char.name}</h4>
-                        <p className="text-sm dark:text-gray-300">{char.role}</p>
-                        <p className="text-xs dark:text-gray-400 mt-2">
-                            {new Date(char.timestamp).toLocaleDateString()}
-                        </p>
-                        <button 
-                            onClick={() => setCharacterDetails(char)}
-                            className="mt-2 button-secondary text-sm"
-                        >
-                            Edit
-                        </button>
-                    </div>
-                ))}
-            </div>
-        </div>
-    );
-
     return (
         <div className="max-w-6xl mx-auto px-4">
-            <div className="mb-16">
-                <h2 className="text-4xl font-bold mb-4 dark:text-gray-100 text-center">Character Development</h2>
-                <p className="dark:text-gray-300 text-lg text-center max-w-2xl mx-auto">
-                    Create and customize detailed character profiles with images and save them for future reference
-                </p>
-            </div>
+            <h2 className="text-3xl font-bold text-gray-100 mb-2">Character Development</h2>
+            <p className="text-gray-300 mb-8">Develop detailed character profiles with AI assistance</p>
 
-            <form onSubmit={handleSubmit} className="card">
-                <div className="p-8">
+            <div className="card p-6">
+                <form onSubmit={handleSubmit} className="space-y-6 mb-8">
                     <div className="grid grid-cols-2 gap-4">
                         <div>
                             <h3 className="text-lg font-semibold mb-4 text-black dark:text-gray-200">Basic Information</h3>
@@ -266,78 +231,95 @@ const CharacterDevelopment = () => {
                             </div>
                         </div>
                     </div>
-                </div>
+                </form>
 
-                <div className="flex justify-end gap-4 mt-8 pt-6 px-8 py-4 border-t dark:border-gray-700 flex align-center justify-center">
+                <div className="flex gap-4 mb-8">
                     <button
-                        type="submit"
-                        className="button"
+                        onClick={handleSubmit}
+                        className="button-green flex-1"
                     >
                         Save Character
                     </button>
                     <button
-                        type="button"
                         onClick={generateCharacterImage}
+                        className="button-green flex-1 flex items-center justify-center gap-2"
                         disabled={isLoading}
-                        className={`button ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
                     >
-                        {isLoading ? 'Generating Image...' : 'Generate Character Image'}
+                        {isLoading ? (
+                            <>
+                                <svg className="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                </svg>
+                                Generating...
+                            </>
+                        ) : (
+                            <>
+                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                </svg>
+                                Generate Character Image
+                            </>
+                        )}
                     </button>
                 </div>
-            </form>
 
-            {generatedImage && (
-                <div className="mt-16 card p-8">
-                    <h3 className="text-2xl font-semibold mb-8 dark:text-gray-100 text-center">Character Visualization</h3>
-                    <div className="max-w-2xl mx-auto">
-                        <img
-                            src={generatedImage}
-                            alt={`${characterDetails.name}`}
-                            className="w-full rounded-xl shadow-lg"
-                            onError={(e) => {
-                                console.error('Error loading image:', e);
-                                toast.error('Error loading the generated image');
-                            }}
-                        />
+                {generatedImage && (
+                    <div className="mb-8">
+                        <h3 className="text-lg font-semibold mb-4 dark:text-gray-200">Generated Character Image</h3>
+                        <img src={generatedImage} alt="Generated character" className="rounded-lg max-w-md mx-auto" />
                     </div>
-                </div>
-            )}
+                )}
 
-            {savedCharacters.length > 0 && (
-                <div className="mt-16 card p-8 ">
-                    <h3 className="text-2xl font-semibold mb-8 dark:text-gray-100 text-center">Saved Characters</h3>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {savedCharacters.map((char) => (
-                            <div key={char.id} className="character-card">
-                                <div className="character-card-content">
-                                    {char.image && (
-                                        <div className="mb-6">
-                                            <img 
-                                                src={char.image} 
-                                                alt={char.name}
-                                                className="w-full h-48 object-cover rounded-lg shadow-md"
-                                            />
-                                        </div>
-                                    )}
-                                    <div className="space-y-3">
-                                        <h4 className="text-lg font-semibold dark:text-gray-200">{char.name}</h4>
-                                        <p className="text-sm dark:text-gray-300">{char.role}</p>
-                                        <p className="text-xs dark:text-gray-400">
-                                            Created {new Date(char.timestamp).toLocaleDateString()}
+                <div className="mt-8 border-t dark:border-gray-700 pt-8">
+                    <h3 className="text-xl font-semibold mb-4 dark:text-gray-200">Saved Characters</h3>
+                    {savedCharacters.length === 0 ? (
+                        <p className="text-gray-500 dark:text-gray-400">No characters saved yet</p>
+                    ) : (
+                        <div className="grid gap-4 md:grid-cols-2">
+                            {savedCharacters.map((character, index) => (
+                                <div 
+                                    key={index}
+                                    className="p-4 rounded-lg border dark:border-gray-700 bg-white dark:bg-gray-800"
+                                >
+                                    <div className="text-gray-800 dark:text-gray-200">
+                                        <h4 className="font-medium text-lg mb-2">{character.name}</h4>
+                                        <p className="text-sm mb-2">
+                                            <span className="font-medium">Role:</span> {character.role}
                                         </p>
+                                        <p className="text-sm mb-2">
+                                            <span className="font-medium">Age:</span> {character.age}
+                                        </p>
+                                        {character.description && (
+                                            <p className="text-sm mb-2">
+                                                <span className="font-medium">Description:</span> {character.description}
+                                            </p>
+                                        )}
                                     </div>
-                                    <button 
-                                        onClick={() => setCharacterDetails(char)}
-                                        className="button-secondary text-sm w-full mt-4 hover-lift"
-                                    >
-                                        Edit Character
-                                    </button>
+                                    <div className="flex gap-2 mt-4">
+                                        <button
+                                            onClick={() => setCharacterDetails(character)}
+                                            className="button-secondary text-sm py-1 bg-blue-500 hover:bg-blue-600 text-white"
+                                        >
+                                            Edit Character
+                                        </button>
+                                        <button
+                                            onClick={() => {
+                                                const updatedCharacters = savedCharacters.filter((_, i) => i !== index);
+                                                setSavedCharacters(updatedCharacters);
+                                                sessionStorage.setItem('savedCharacters', JSON.stringify(updatedCharacters));
+                                            }}
+                                            className="button-secondary text-sm py-1 bg-red-500 hover:bg-red-600 text-white"
+                                        >
+                                            Delete
+                                        </button>
+                                    </div>
                                 </div>
-                            </div>
-                        ))}
-                    </div>
+                            ))}
+                        </div>
+                    )}
                 </div>
-            )}
+            </div>
         </div>
     );
 };

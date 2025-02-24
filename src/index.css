@@ -63,10 +63,10 @@
 
 /* Card Styles */
 .card {
-  @apply rounded-xl shadow-lg backdrop-blur-md
-  dark:bg-gray-800/70 bg-white/95
+  @apply rounded-xl shadow-lg
+  dark:bg-gray-800 bg-white
   dark:border-gray-700 border border-gray-200
-  transition-all duration-300
+  transition-transform duration-300
   hover:shadow-xl hover:translate-y-[-2px];
 }
 
@@ -99,15 +99,12 @@ body::before {
   left: 0;
   width: 100%;
   height: 100%;
-  backdrop-filter: blur(8px);
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgba(0, 0, 0, 0.5);
   z-index: 0;
 }
 
 .glass-effect {
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  @apply bg-white/70 dark:bg-gray-800/70;
 }
 
 .hover-scale {
@@ -137,7 +134,7 @@ body::before {
 }
 
 .dark .card {
-  @apply bg-dark-100 shadow-dark border border-dark-300;
+  @apply bg-gray-800 border-gray-700;
 }
 
 .dark .btn-secondary {
@@ -209,9 +206,9 @@ elevenlabs-convai {
 }
 
 .button-secondary {
-  @apply px-4 py-2 rounded-lg font-medium transition-all duration-200
-  dark:bg-gray-700/50 bg-gray-100
-  dark:hover:bg-gray-600/50 hover:bg-gray-200
+  @apply px-4 py-2 rounded-lg font-medium transition-transform duration-200
+  dark:bg-gray-700 bg-gray-100
+  dark:hover:bg-gray-600 hover:bg-gray-200
   dark:text-gray-200 text-gray-700
   border dark:border-gray-600 border-gray-300
   focus:ring-2 focus:ring-primary-500 focus:ring-offset-2
@@ -223,4 +220,25 @@ elevenlabs-convai {
   @apply transition-all duration-300 ease-in-out
   hover:shadow-2xl hover:translate-y-[-4px]
   dark:hover:bg-gray-700/80;
+}
+
+/* Update the button-green style */
+.button-green {
+  @apply px-4 py-2 rounded-lg font-medium 
+  bg-green-600 
+  text-white
+  border border-green-500
+  transition-transform duration-200
+  transform hover:scale-[1.02] active:scale-[0.98]
+  hover:bg-green-700 hover:border-green-600
+  focus:ring-2 focus:ring-green-500 focus:ring-offset-2 outline-none;
+}
+
+/* Add styles for the download button */
+.button-secondary svg {
+  @apply transition-transform;
+}
+
+.button-secondary:hover svg {
+  @apply transform translate-y-[1px];
 }
