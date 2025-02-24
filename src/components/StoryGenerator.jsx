@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import toast from 'react-hot-toast';
+import { jsPDF } from 'jspdf';
 
 const StoryGenerator = () => {
     const navigate = useNavigate();
@@ -14,6 +16,8 @@ const StoryGenerator = () => {
     const [response, setResponse] = useState(null);
     const [loading, setLoading] = useState(false);
     const responseRef = useRef(null);
+    const [drafts, setDrafts] = useState([]);
+    const [showDrafts, setShowDrafts] = useState(false);
 
     const API_KEY = 'AIzaSyDQgCTCEbkJGdH4NlVV3Tei3IOAmQtRJ9Y';
     const API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent';
@@ -23,6 +27,14 @@ const StoryGenerator = () => {
         const savedResponse = localStorage.getItem('storyGeneratorResponse');
         if (savedResponse) {
             setResponse(JSON.parse(savedResponse));
+        }
+    }, []);
+
+    // Load drafts from localStorage on component mount
+    useEffect(() => {
+        const savedDrafts = localStorage.getItem('storyGeneratorDrafts');
+        if (savedDrafts) {
+            setDrafts(JSON.parse(savedDrafts));
         }
     }, []);
 
@@ -107,12 +119,169 @@ const StoryGenerator = () => {
         });
     };
 
+    const saveDraft = () => {
+        if (!response) {
+            toast.error('Generate a story first before saving as draft');
+            return;
+        }
+
+        const newDraft = {
+            id: Date.now(),
+            formData,
+            response,
+            date: new Date().toLocaleDateString()
+        };
+
+        const updatedDrafts = [...drafts, newDraft];
+        setDrafts(updatedDrafts);
+        localStorage.setItem('storyGeneratorDrafts', JSON.stringify(updatedDrafts));
+        toast.success('Draft saved successfully!');
+    };
+
+    const loadDraft = (draft) => {
+        setFormData(draft.formData);
+        setResponse(draft.response);
+        setShowDrafts(false);
+        toast.success('Draft loaded successfully!');
+    };
+
+    const deleteDraft = (id) => {
+        const updatedDrafts = drafts.filter(draft => draft.id !== id);
+        setDrafts(updatedDrafts);
+        localStorage.setItem('storyGeneratorDrafts', JSON.stringify(updatedDrafts));
+        toast.success('Draft deleted!');
+    };
+
+    const downloadAsPDF = () => {
+        if (!response) return;
+
+        const doc = new jsPDF();
+        const lineHeight = 10;
+        let yPos = 20;
+
+        // Add title
+        doc.setFontSize(20);
+        doc.setFont('helvetica', 'bold');
+        doc.text('Generated Story Concept', 20, yPos);
+        yPos += lineHeight * 2;
+
+        // Add Story Idea
+        doc.setFontSize(16);
+        doc.text('Story Idea', 20, yPos);
+        yPos += lineHeight;
+        doc.setFontSize(12);
+        doc.setFont('helvetica', 'normal');
+        const storyIdeaLines = doc.splitTextToSize(response.storyIdea, 170);
+        doc.text(storyIdeaLines, 20, yPos);
+        yPos += (storyIdeaLines.length * lineHeight) + 10;
+
+        // Add Plot Outline
+        doc.setFontSize(16);
+        doc.setFont('helvetica', 'bold');
+        doc.text('Plot Outline', 20, yPos);
+        yPos += lineHeight;
+        doc.setFontSize(12);
+        doc.setFont('helvetica', 'normal');
+        response.plotOutline.forEach(point => {
+            const lines = doc.splitTextToSize(`• ${point}`, 170);
+            doc.text(lines, 20, yPos);
+            yPos += (lines.length * lineHeight) + 5;
+        });
+        yPos += lineHeight;
+
+        // Add Characters
+        doc.setFontSize(16);
+        doc.setFont('helvetica', 'bold');
+        doc.text('Main Characters', 20, yPos);
+        yPos += lineHeight;
+        
+        response.mainCharacters.forEach(character => {
+            doc.setFontSize(14);
+            doc.setFont('helvetica', 'bold');
+            doc.text(character.name, 20, yPos);
+            yPos += lineHeight;
+            
+            doc.setFontSize(12);
+            doc.setFont('helvetica', 'normal');
+            doc.text(`Role: ${character.role}`, 20, yPos);
+            yPos += lineHeight;
+            
+            const descLines = doc.splitTextToSize(character.description, 170);
+            doc.text(descLines, 20, yPos);
+            yPos += (descLines.length * lineHeight) + 10;
+        });
+
+        // Save the PDF
+        doc.save('generated-story-concept.pdf');
+        toast.success('Story downloaded as PDF!');
+    };
+
+    const handleDialogueGeneration = () => {
+        navigate('/dialogue', {
+            state: {
+                mainCharacters: response.mainCharacters,
+                setting: response.setting,
+                plotOutline: response.plotOutline,
+                themes: response.themes
+            }
+        });
+    };
+
     return (
-        <div className="max-w-4xl mx-auto px-4">
-            <div className="mb-8 text-center">
-                <h2 className="text-3xl font-bold mb-2 dark:text-gray-100">Story Generator Playground</h2>
-                <p className="dark:text-gray-300 ">Create detailed story concepts with AI assistance</p>
+        <div className="max-w-6xl mx-auto px-4">
+            <div className="flex justify-between items-center mb-8">
+                <div>
+                    <h2 className="text-3xl font-bold text-gray-100 mb-2">Story Generator</h2>
+                    <p className="text-gray-300">Generate unique story ideas based on your preferences</p>
+                </div>
+                <button
+                    onClick={() => setShowDrafts(!showDrafts)}
+                    className="button-secondary"
+                >
+                    {showDrafts ? 'Hide Drafts' : 'Show Drafts'}
+                </button>
             </div>
+
+            {showDrafts && (
+                <div className="mb-8 card p-6">
+                    <h3 className="text-xl font-semibold mb-4 dark:text-gray-100">Saved Drafts</h3>
+                    {drafts.length === 0 ? (
+                        <p className="text-gray-500 dark:text-gray-400">No saved drafts yet</p>
+                    ) : (
+                        <div className="space-y-4">
+                            {drafts.map((draft) => (
+                                <div 
+                                    key={draft.id} 
+                                    className="p-4 border dark:border-gray-700 rounded-lg flex justify-between items-center"
+                                >
+                                    <div>
+                                        <h4 className="font-medium dark:text-gray-200">
+                                            {draft.formData.genre || 'Untitled'} Story
+                                        </h4>
+                                        <p className="text-sm text-gray-500 dark:text-gray-400">
+                                            Created on {draft.date}
+                                        </p>
+                                    </div>
+                                    <div className="flex gap-2">
+                                        <button
+                                            onClick={() => loadDraft(draft)}
+                                            className="button-secondary text-sm"
+                                        >
+                                            Load
+                                        </button>
+                                        <button
+                                            onClick={() => deleteDraft(draft.id)}
+                                            className="button-secondary text-sm text-red-500 hover:text-red-600"
+                                        >
+                                            Delete
+                                        </button>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+                </div>
+            )}
 
             <form onSubmit={handleSubmit} className="card p-6 space-y-6">
                 <div className="input-container">
@@ -217,8 +386,41 @@ const StoryGenerator = () => {
 
             {response && (
                 <div className="mt-8 card p-6">
-                    <h3 className="text-xl font-semibold mb-6 dark:text-gray-100 text-gray-900">Generated Story Concept</h3>
-
+                    <div className="flex justify-between items-center mb-6">
+                        <h3 className="text-xl font-semibold dark:text-gray-100">Generated Story Concept</h3>
+                        <div className="flex gap-2">
+                            <button
+                                onClick={downloadAsPDF}
+                                className="button-secondary flex items-center gap-2"
+                            >
+                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} 
+                                        d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                                </svg>
+                                Download PDF
+                            </button>
+                            <button
+                                onClick={saveDraft}
+                                className="button-green flex items-center gap-2"
+                            >
+                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} 
+                                        d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
+                                </svg>
+                                Save as Draft
+                            </button>
+                            <button
+                                onClick={handleDialogueGeneration}
+                                className="button-green flex items-center gap-2"
+                            >
+                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} 
+                                        d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+                                </svg>
+                                Generate Dialogue
+                            </button>
+                        </div>
+                    </div>
                     <div className="space-y-6 text-black">
                         <div className="card p-4">
                             <h4 className="font-medium mb-2 dark:text-gray-200">Story Idea</h4>
@@ -246,7 +448,7 @@ const StoryGenerator = () => {
                                         <p className="dark:text-gray-300 mb-4">{character.description}</p>
                                         <button 
                                             onClick={() => handleCharacterDevelopment(character)}
-                                            className="button-secondary"
+                                            className="button-green"
                                         >
                                             Develop Character
                                         </button>
